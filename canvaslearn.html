@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="jquery.js"></script>
+	<style type="text/css">
+		#myCanvas
+		{
+			
+			border:1px solid #000000;"
+		}
+		/*body*/
+		{
+			border:1px solid black;
+			padding: 10px;
+		}
+		.divi
+		{
+			float: right;
+			width: 200px;
+			height: 700px;
+			border:1px solid black;
+			background-color: teal;
+
+		}
+		.clearfix
+		{
+			clear: both;
+		}
+		#pencil
+		{
+			border:1px solid black;
+			width: 100px;
+			height: 30px;
+			margin-top: 10px;
+		}
+		#line
+		{
+			border:1px solid black;
+			width: 100px;
+			height: 30px;
+			/*margin-top: 10px;*/
+		}
+		#circle
+		{
+			border:1px solid black;
+			width: 100px;
+			height: 30px;
+			/*margin-top: 10px;*/
+		}
+		#square
+		{
+			border:1px solid black;
+			width: 100px;
+			height: 30px;
+			/*margin-top: 10px;*/
+		}
+		#rect
+		{
+			border:1px solid black;
+			width: 100px;
+			height: 30px;
+			/*margin-top: 10px;*/
+		}
+		#color
+		{
+			border:1px solid black;
+			width: 100px;
+			height: 30px;
+			/*margin-top: 10px;*/
+		}
+		button
+		{
+			margin-top: 10px;
+			margin-left: 50px;
+		}
+		button:hover
+		{
+			width: 95px;
+			height: 25px;
+			cursor: pointer;
+			background-color: teal;
+		}
+	</style>
+	
+</head>
+<body>
+
+<canvas id="myCanvas" style="background-color: lightgrey" width="1300" height="700" style="margin-left: 0%;" onmousemove="showw()" onmousedown="pen()">
+	
+</canvas>
+<div class="divi">
+	<button id="pencil" onclick="pen()" ><img src="img/pencil.png"></button>
+	<button id="line" onclick="line()" >Line</button>
+	<button id="circle" onclick="circ()"><img src="img/circle.png"></button>
+	<button id="square"><img src="img/square.png"></button>
+	<button id="rect" onclick="rect()"><img src="img/rect.png"></button>
+	<button id="color"><input type="color" id="pick" name=""></button>
+	<button onclick="col()">Fill</button>
+	<button onclick="drawGrid()">save</button>
+
+</div>
+<div class="clearfix"></div>
+<input type="" id="mouse" name="">
+<script type="text/javascript">
+	var dy = 0;
+	var dx = 0;
+	var uy = 0;
+	var ux = 0;
+	var canvas = document.getElementById("myCanvas");
+	var pin = document.getElementById('pick');
+	var pencil = canvas.getContext("2d");
+	function drawGrid(strokeStyle, fillStyle) {   controlContext.save(); // Save the context on a stack
+   controlContext.fillStyle = fillStyle;   
+   controlContext.strokeStyle = strokeStyle;
+// Draw the grid...
+   controlContext.restore(); // Restore the context from the stack 
+} 
+	function showw(){
+		mouse.value='X'+(event.x-9)+'| |'+'Y'+(event.y-8);
+	}
+	// ctx.fillStyle = "#FF0000";
+	// ctx.fillRect(0,0,150,75);
+	function pen(){
+
+	canvas.onmousedown=function down(){
+		dy=event.y-8;
+		dx=event.x-9;
+		pencil.moveTo(dx,dy);
+		
+	}
+	canvas.onmouseup=function up(){
+		uy=event.y-8;
+		ux=event.x-9;
+		pencil.lineTo(ux,uy);
+		pencil.strokeStyle=pick.value;
+		pencil.stroke(); 
+	}
+	
+}
+
+	function line(){
+
+	canvas.onmousedown=function down(){
+		dy=event.y-8;
+		dx=event.x-9;
+		// pencil.moveTo(dx,dy);
+		pencil.stroke();
+		
+	}
+	canvas.onmouseup=function up(){
+		uy=event.y-8;
+		ux=event.x-9;
+		pencil.lineTo(ux,uy);
+		pencil.strokeStyle=pick.value;
+		pencil.stroke(); 
+	}
+	
+}
+	function rect(){
+		canvas.onmousedown=function down(){
+			dy=event.y-8;
+			dx=event.x-9;
+			pencil.moveTo(dx,dy);
+		}
+		canvas.onmouseup=function up(){
+			uy=event.y-8;
+			ux=event.x-9;
+			
+			pencil.strokeRect(dx,dy,ux-dx,uy-dy);
+			pencil.stroke()
+		}
+}
+
+	function circ()
+	{
+		canvas.onmousedown=function down(){
+			dy=event.y-8;
+			dx=event.x-9;
+			pencil.moveTo(dx,dy);
+		}
+
+		canvas.onmouseup=function up()
+		{
+			
+			uy=event.y-8;
+			ux=event.x-9;
+			// pencil
+			pencil.beginPath();
+			pencil.arc(ux, uy, 40, 0, 2 * Math.PI);
+			pencil.strokeStyle=pick.value;
+			pencil.stroke();
+		
+		}
+	}
+	function col(){
+		canvas.onmousedown=function down(){
+			dy=event.y-8;
+			dx=event.x-9;
+			pencil.moveTo(dx,dy);
+		}
+		canvas.onmouseup=function up(){
+			uy=event.y-8;
+			ux=event.x-9;
+			
+			pencil.fillStyle=pick.value;
+			pencil.fillRect(dx,dy,ux-dx,uy-dy);
+			pencil.fill();
+			pencil.stroke();
+		}
+	}
+</script>
+</body>
+</html>
